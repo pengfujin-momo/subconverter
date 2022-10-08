@@ -1,0 +1,8 @@
+FROM tindy2013/subconverter:latest
+RUN apk --update add tzdata && \
+    cp /usr/share/zoneinfo/Asia/Shanghai /etc/localtime && \
+    echo "Asia/Shanghai" > /etc/timezone && \
+    rm -rf /var/cache/apk/*
+RUN sed -i '/TW/s/🇨🇳/🇹🇼/g' subconverter/base/snippets/emoji.txt && \
+    sed -i '/TW/{n;s/🇨🇳/🇹🇼/g;}' subconverter/base/snippets/emoji.toml
+EXPOSE 25500
