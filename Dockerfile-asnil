@@ -9,8 +9,8 @@ RUN apk --update add tzdata && \
 COPY scripts\crontab /tmp
 RUN apk add git && \
     cd /base/rules/myself && \
-    git clone git@github.com:pengfujin-momo/myself.git && \
-    cat /tmp/crontab >> /var/spool/cron/crontabs/root && \
+    git clone git@github.com:pengfujin-momo/myself.git
+RUN cat /tmp/crontab >> /var/spool/cron/crontabs/root && \
     rm -rf /tmp/* 
 EXPOSE 25500
 WORKDIR /base
