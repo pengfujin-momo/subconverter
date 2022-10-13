@@ -1,2 +1,2 @@
-25      1       1       *       *       cd /base/rules/myself/clash/list/ && wget -i url.list
+#25      1       1       *       *       cd /base/rules/myself/clash/list/ && wget -i url.list
 25      2       *       *       *       cd /base/rules/myself && git pull

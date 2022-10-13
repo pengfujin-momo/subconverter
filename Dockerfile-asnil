@@ -8,8 +8,8 @@ RUN apk --update add tzdata && \
     
 RUN apk add git && \
     apk add wget && \
-    cd /base/rules && \
-    git clone https://github.com/pengfujin-momo/myself.git && \
+    cd /base/rules && git clone https://github.com/pengfujin-momo/myself.git && \
+    cd /base/rules/myself/clash/list/ && wget -i url.list && \    
     cat /tmp/crontab >> /var/spool/cron/crontabs/root && \
     rm -rf /tmp/* && \
     rm -rf /var/cache/apk/*
