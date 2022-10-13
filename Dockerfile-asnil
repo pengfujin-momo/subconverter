@@ -7,6 +7,7 @@ RUN apk --update add tzdata && \
     echo "Asia/Shanghai" > /etc/timezone
     
 RUN apk add git && \
+    apk add wget && \
     cd /base/rules && \
     git clone https://github.com/pengfujin-momo/myself.git && \
     cat /tmp/crontab >> /var/spool/cron/crontabs/root && \
