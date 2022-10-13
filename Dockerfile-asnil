@@ -8,7 +8,7 @@ RUN apk --update add tzdata && \
     
 RUN apk add git && \
     cd /base/rules && \
-    git clone git@github.com:pengfujin-momo/myself.git && \
+    git clone https://github.com/pengfujin-momo/myself.git && \
     cat /tmp/crontab >> /var/spool/cron/crontabs/root && \
     rm -rf /tmp/* && \
     rm -rf /var/cache/apk/*
