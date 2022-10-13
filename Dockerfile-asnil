@@ -1,17 +1,18 @@
 FROM tindy2013/subconverter:latest
+COPY scripts/crontab /tmp
 RUN sed -i '/TW/s/🇨🇳/🇹🇼/g' /base/snippets/emoji.txt && \
     sed -i '/TW/{n;s/🇨🇳/🇹🇼/g;}' /base/snippets/emoji.toml
 RUN apk --update add tzdata && \
     cp /usr/share/zoneinfo/Asia/Shanghai /etc/localtime && \
-    echo "Asia/Shanghai" > /etc/timezone && \
-    rm -rf /var/cache/apk/*
-
-COPY scripts/crontab /tmp
+    echo "Asia/Shanghai" > /etc/timezone
+    
 RUN apk add git && \
     cd /base/rules && \
-    git clone git@github.com:pengfujin-momo/myself.git
-RUN cat /tmp/crontab >> /var/spool/cron/crontabs/root && \
-    rm -rf /tmp/* 
+    git clone git@github.com:pengfujin-momo/myself.git && \
+    cat /tmp/crontab >> /var/spool/cron/crontabs/root && \
+    rm -rf /tmp/* && \
+    rm -rf /var/cache/apk/*
+
 EXPOSE 25500
 WORKDIR /base
 CMD crond && subconverter
