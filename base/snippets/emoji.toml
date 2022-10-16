@@ -15,7 +15,7 @@ match = "(?i:\\bSG[P]?\\b|Singapore|新加坡|狮城|[^-]新)"
 emoji = "🇸🇬"
 
 [[emoji]]
-match = "(?i:\\bJP[N]?\\b|Japan|Tokyo|Osaka|Saitama|日本|东京|大阪|埼玉|[^-]日)"
+match = "(?i:\\bJP[N]?\\b|Japan|Tokyo|Osaka|Saitama|日本|东京|大阪|埼玉|[^-尼]日)"
 emoji = "🇯🇵"
 
 [[emoji]]
