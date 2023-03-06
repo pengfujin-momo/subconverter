@@ -1,4 +1,4 @@
-FROM tindy2013/subconverter:latest
+FROM tindy2013/subconverter:0.7.2
 
 
 COPY replacements/snippets/emoji.toml /base/snippets/emoji.toml
