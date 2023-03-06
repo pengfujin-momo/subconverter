@@ -1,14 +1,10 @@
 FROM tindy2013/subconverter:latest
-COPY scripts/crontab /tmp
-RUN sed -i '/TW/s/🇨🇳/🇹🇼/g' /base/snippets/emoji.txt && \
-    sed -i '/TW/{n;s/🇨🇳/🇹🇼/g;}' /base/snippets/emoji.toml && \
-    sed -i '/日本/s/\^-/\^-尼/g' /base/snippets/emoji.txt && \
-    sed -i '/日本/s/\^-/\^-尼/g' /base/snippets/emoji.toml
+
+
+COPY replacements/ /base/
 
 RUN apk --update add tzdata && \
     cp /usr/share/zoneinfo/Asia/Shanghai /etc/localtime && \
     echo "Asia/Shanghai" > /etc/timezone
 
 EXPOSE 25500
-WORKDIR /base
-CMD crond && subconverter
