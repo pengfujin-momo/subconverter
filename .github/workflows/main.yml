@@ -38,5 +38,5 @@ jobs:
           platforms: linux/amd64,linux/arm64
           push: true
           tags: |
-            ${{ secrets.DOCKER_USERNAME }}/subconverter:latest
-            ${{ secrets.DOCKER_USERNAME }}/subconverter:${{ steps.date.outputs.today }}         
+            asnil/subconverter:latest
+            asnil/subconverter:${{ steps.date.outputs.today }}         
