@@ -11,7 +11,7 @@ match = "(?i:\\bTW[N]?\\b|Taiwan|新北|彰化|\\bCHT\\b|台湾|[^-]台|\\bHINET
 emoji = "🇹🇼"
 
 [[emoji]]
-match = "(?i:\\bSG[P]?\\b|Singapore|新加坡|狮城|[^-]新)"
+match = "(?i:\\bSG[P]?\\b|Singapore|新加坡|狮城|[^-美国]新)"
 emoji = "🇸🇬"
 
 [[emoji]]
