@@ -7,6 +7,10 @@ match = "(?i:\\bTW[N]?\\b|Taiwan|新北|彰化|\\bCHT\\b|台湾|[^-]台|\\bHINET
 emoji = "🇹🇼"
 
 [[emoji]]
+match = "(?i:\\bSG[P]?\\b|Singapore|新加坡|狮城|[^-]新)"
+emoji = "🇸🇬"
+
+[[emoji]]
 match = "(?i:\\bJP[N]?\\b|Japan|Tokyo|Osaka|Saitama|日本|东京|大阪|埼玉|[^-尼]日)"
 emoji = "🇯🇵"
 
@@ -358,10 +362,6 @@ emoji = "🇳🇵"
 [[emoji]]
 match = "(Bengal|孟加拉)"
 emoji = "🇧🇩"
-
-[[emoji]]
-match = "(?i:\\bSG[P]?\\b|Singapore|新加坡|狮城|[^-]新)"
-emoji = "🇸🇬"
 
 [[emoji]]
 match = "(?i:\\bHK[G]?\\b|Hong.*?Kong|\\bHKT\\b|\\bHKBN\\b|\\bHGC\\b|\\bWTT\\b|\\bCMI\\b|[^-]港)"
