@@ -1,7 +1,8 @@
 FROM tindy2013/subconverter:latest
 
 
-COPY replacements/ /base/
+COPY replacements/snippets/emoji.toml /base/snippets/emoji.toml
+COPY replacements/snippets/emoji.txt /base/snippets/emoji.txt
 
 RUN apk --update add tzdata && \
     cp /usr/share/zoneinfo/Asia/Shanghai /etc/localtime && \
