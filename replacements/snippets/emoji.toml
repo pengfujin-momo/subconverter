@@ -1,8 +1,4 @@
 [[emoji]]
-match = "(?i:Bandwidth|expire|流量|时间|应急|过期)"
-emoji = "🏳️‍🌈"
-
-[[emoji]]
 match = "(?i:\\bTW[N]?\\b|Taiwan|新北|彰化|\\bCHT\\b|台湾|[^-]台|\\bHINET\\b)"
 emoji = "🇹🇼"
 
