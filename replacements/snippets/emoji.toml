@@ -119,7 +119,7 @@ match = "(?i:\\bFR[A]?\\b|France|Paris|法国|巴黎)"
 emoji = "🇫🇷"
 
 [[emoji]]
-match = "(?i:\\bUK\\b|\\bGB[R]?\\b|England|United.*?Kingdom|London|英国|[^-]英|伦敦)"
+match = "(?i:\bUK\b|\bGB(?!R)?\b(?!\\d+\\s)|England|United.*?Kingdom|London|英国|[^-]英|伦敦)"
 emoji = "🇬🇧"
 
 [[emoji]]
