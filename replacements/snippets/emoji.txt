@@ -1,4 +1,3 @@
-(?i:Bandwidth|expire|流量|时间|应急|过期),🏳️‍🌈
 (?i:\bTW[N]?\b|Taiwan|新北|彰化|\bCHT\b|台湾|[^-]台|\bHINET\b),🇹🇼
 (?i:\bJP[N]?\b|Japan|Tokyo|Osaka|Saitama|日本|东京|大阪|埼玉|[^-尼]日),🇯🇵
 (?i:\bK[O]?R\b|Korea|首尔|韩|韓),🇰🇷
