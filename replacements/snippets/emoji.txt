@@ -1,5 +1,5 @@
 (?i:\bTW[N]?\b|Taiwan|新北|彰化|\bCHT\b|台湾|[^-]台|\bHINET\b),🇹🇼
-(?i:\bJP[N]?\b|Japan|Tokyo|Osaka|Saitama|日本|东京|大阪|埼玉|[^-尼]日),🇯🇵
+(?i:\bJP.*\b|Japan|Tokyo|Osaka|Saitama|日本|东京|大阪|埼玉|[^-尼]日),🇯🇵
 (?i:\bK[O]?R\b|Korea|首尔|韩|韓),🇰🇷
 (?i:\bUS[A]?\b|America|United.*?States|美国|[^-]美|波特兰|达拉斯|俄勒冈|凤凰城|费利蒙|硅谷|拉斯维加斯|洛杉矶|圣何塞|圣克拉拉|西雅图|芝加哥),🇺🇸
 (Ascension|阿森松),🇦🇨
