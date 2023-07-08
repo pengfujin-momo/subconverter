@@ -1,6 +1,6 @@
 [[emoji]]
 match = "(套餐|时间|订阅|时间|流量|官网|链接)"
-emoji = "ℹ️"
+emoji = "🏴"
 
 [[emoji]]
 match = "(?i:\\bTW[N]?\\b|Taiwan|新北|彰化|\\bCHT\\b|台湾|[^-]台|\\bHINET\\b)"
