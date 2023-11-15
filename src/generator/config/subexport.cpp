@@ -116,7 +116,7 @@ bool applyMatcher(const std::string &rule, std::string &real_rule, const Proxy &
     std::string target, ret_real_rule;
     static const std::string groupid_regex = R"(^!!(?:GROUPID|INSERT)=([\d\-+!,]+)(?:!!(.*))?$)", group_regex = R"(^!!(?:GROUP)=(.+?)(?:!!(.*))?$)";
     static const std::string type_regex = R"(^!!(?:TYPE)=(.+?)(?:!!(.*))?$)", port_regex = R"(^!!(?:PORT)=(.+?)(?:!!(.*))?$)", server_regex = R"(^!!(?:SERVER)=(.+?)(?:!!(.*))?$)";
-    static const string_array types = {"", "SS", "SSR", "VMESS", "TROJAN", "SNELL", "HTTP", "HTTPS", "SOCKS5"};
+    static const string_array types = {"", "SS", "SSR", "VMESS", "TROJAN", "SNELL", "HTTP", "HTTPS", "SOCKS5", "WIREGUARD"};
     if(startsWith(rule, "!!GROUP="))
     {
         regGetMatch(rule, group_regex, 3, 0, &target, &ret_real_rule);
@@ -155,7 +155,7 @@ bool applyMatcher(const std::string &rule, std::string &real_rule, const Proxy &
     return true;
 }
 
-void processRemark(std::string &remark, string_array &remarks_list, bool proc_comma = true)
+void processRemark(std::string &remark, const string_array &remarks_list, bool proc_comma = true)
 {
     // Replace every '=' with '-' in the remark string to avoid parse errors from the clients.
     //     Surge is tested to yield an error when handling '=' in the remark string, 
@@ -172,7 +172,7 @@ void processRemark(std::string &remark, string_array &remarks_list, bool proc_co
     }
     std::string tempRemark = remark;
     int cnt = 2;
-    while(std::find(remarks_list.begin(), remarks_list.end(), tempRemark) != remarks_list.end())
+    while(std::find(remarks_list.cbegin(), remarks_list.cend(), tempRemark) != remarks_list.cend())
     {
         tempRemark = remark + " " + std::to_string(cnt);
         cnt++;
@@ -2078,12 +2078,21 @@ static rapidjson::Value buildSingBoxTransport(const Proxy& proxy, rapidjson::Mem
     return transport;
 }
 
-void addSingBoxCommonMembers(rapidjson::Value &proxy, const Proxy &x, const rapidjson::GenericStringRef<rapidjson::Value::Ch> &type, rapidjson::MemoryPoolAllocator<> &allocator)
+static void addSingBoxCommonMembers(rapidjson::Value &proxy, const Proxy &x, const rapidjson::GenericStringRef<rapidjson::Value::Ch> &type, rapidjson::MemoryPoolAllocator<> &allocator)
 {
     proxy.AddMember("type", type, allocator);
     proxy.AddMember("tag", rapidjson::StringRef(x.Remark.c_str()), allocator);
     proxy.AddMember("server", rapidjson::StringRef(x.Hostname.c_str()), allocator);
     proxy.AddMember("server_port", x.Port, allocator);
+}
+
+static rapidjson::Value stringArrayToJsonArray(const std::string &array, const std::string &delimiter, rapidjson::MemoryPoolAllocator<> &allocator)
+{
+    rapidjson::Value result(rapidjson::kArrayType);
+    string_array vArray = split(array, delimiter);
+    for (const auto &x : vArray)
+        result.PushBack(rapidjson::Value(trim(x).c_str(), allocator), allocator);
+    return result;
 }
 
 void proxyToSingBox(std::vector<Proxy> &nodes, rapidjson::Document &json, std::vector<RulesetContent> &ruleset_content_array, const ProxyGroupConfigs &extra_proxy_group, extra_settings &ext) {
@@ -2097,6 +2106,8 @@ void proxyToSingBox(std::vector<Proxy> &nodes, rapidjson::Document &json, std::v
     outbounds.PushBack(direct, allocator);
     auto reject = buildObject(allocator, "type", "block", "tag", "REJECT");
     outbounds.PushBack(reject, allocator);
+    auto dns = buildObject(allocator, "type", "dns", "tag", "dns-out");
+    outbounds.PushBack(dns, allocator);
 
     for (Proxy &x : nodes)
     {
@@ -2179,22 +2190,13 @@ void proxyToSingBox(std::vector<Proxy> &nodes, rapidjson::Document &json, std::v
 
                 if (!x.AllowedIPs.empty())
                 {
-                    auto allowed = split(x.AllowedIPs, ",");
-                    rapidjson::Value allowed_ips(rapidjson::kArrayType);
-                    for (const auto &ip: allowed) {
-                        allowed_ips.PushBack(rapidjson::Value(trim(ip).c_str(), allocator), allocator);
-                    }
+                    auto allowed_ips = stringArrayToJsonArray(x.AllowedIPs, ",", allocator);
                     peer.AddMember("allowed_ips", allowed_ips, allocator);
                 }
 
                 if (!x.ClientId.empty())
                 {
-                    auto client_id = split(x.ClientId, ",");
-                    rapidjson::Value reserved(rapidjson::kArrayType);
-                    for (const auto &id : client_id)
-                    {
-                        reserved.PushBack(to_int(trim(id)), allocator);
-                    }
+                    auto reserved = stringArrayToJsonArray(x.ClientId, ",", allocator);
                     peer.AddMember("reserved", reserved, allocator);
                 }
 
