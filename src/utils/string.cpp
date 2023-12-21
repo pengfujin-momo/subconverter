@@ -51,9 +51,8 @@ std::vector<std::string> split(const std::string &s, const std::string &separato
     return result;
 }
 
-std::vector<std::string_view> split(std::string_view s, char separator)
+void split(std::vector<std::string_view> &result, std::string_view s, char separator)
 {
-    std::vector<std::string_view> result;
     string_size i = 0;
 
     while (i != s.size())
@@ -87,6 +86,12 @@ std::vector<std::string_view> split(std::string_view s, char separator)
             i = j;
         }
     }
+}
+
+std::vector<std::string_view> split(std::string_view s, char separator)
+{
+    std::vector<std::string_view> result;
+    split(result, s, separator);
     return result;
 }
 
@@ -338,10 +343,10 @@ std::string getUrlArg(const std::string &url, const std::string &request)
     return "";
 }
 
-std::string getUrlArg(const string_multimap &url, const std::string &request)
+std::string getUrlArg(const string_multimap &args, const std::string &request)
 {
-    auto it = url.find(request);
-    if(it != url.end())
+    auto it = args.find(request);
+    if(it != args.end())
         return it->second;
     return "";
 }

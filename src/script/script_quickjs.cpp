@@ -8,12 +8,12 @@
 #include <windows.h>
 #endif // _WIN32
 
-#include "../handler/multithread.h"
-#include "../handler/webget.h"
-#include "../handler/settings.h"
-#include "../parser/config/proxy.h"
-#include "../utils/map_extra.h"
-#include "../utils/system.h"
+#include "handler/multithread.h"
+#include "handler/webget.h"
+#include "handler/settings.h"
+#include "parser/config/proxy.h"
+#include "utils/map_extra.h"
+#include "utils/system.h"
 #include "script_quickjs.h"
 
 std::string parseProxy(const std::string &source);
@@ -255,7 +255,7 @@ namespace qjs
             string_icase_map res;
             JSPropertyEnum *props = nullptr, *props_begin;
             uint32_t len = 0;
-            JS_GetOwnPropertyNames(ctx, &props, &len, v, 1);
+            JS_GetOwnPropertyNames(ctx, &props, &len, v, JS_GPN_STRING_MASK | JS_GPN_ENUM_ONLY);
             props_begin = props;
             while(len > 0)
             {
