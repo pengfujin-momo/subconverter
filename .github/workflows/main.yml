@@ -41,10 +41,8 @@ jobs:
           git add -A
           git commit -a -m "$(TZ=Asia/Shanghai date +"%Y-%m-%d %H:%M:%S")"
           git push "https://${{ github.actor }}:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}" master
-      
-      - name: Stop if changes = no
-        if: env.changes == 'no'
-        run: exit 1
+
+    
 
       - name: Check out the repo
         uses: actions/checkout@v2
@@ -63,6 +61,7 @@ jobs:
         run: echo "::set-output name=today::$(date +'%Y-%m-%d')"
 
       - name: Build and push Docker images
+        if: env.changes == 'yes'      
         uses: docker/build-push-action@v2
         with:
           context: .
