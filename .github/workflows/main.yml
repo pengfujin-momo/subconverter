@@ -1,19 +1,50 @@
-name: Docker Image CI
+name: Rebuild Docker Image
 
 on:
+  workflow_dispatch:
   push:
     branches: [ master ]
   schedule:
-    - cron: '0 22 * * 1'
+    - cron: "30 */4 * * *"
 
 jobs:
 
   Docker:
-
     runs-on: ubuntu-latest
-    
-
+    permissions:
+      contents: write
     steps:
+      - uses: actions/checkout@v3
+
+      - name: Get Docker Digest
+        run: |
+          docker pull tindy2013/subconverter:latest
+          docker inspect --format='{{index .RepoDigests 0}}' tindy2013/subconverter:latest > digest.temp
+          
+      - name: Check Git Status
+        run: |
+          if [ -n "$(git status --porcelain)" ]; then
+            echo "Git仓库有以下更改："
+            git diff --name-status
+            echo "changes=yes" >> $GITHUB_ENV
+          else
+            echo "Git仓库没有未提交的更改，跳过后续步骤。"
+            echo "changes=no" >> $GITHUB_ENV
+          fi
+          
+      - name: Git Push
+        if: env.changes == 'yes'
+        run: |
+          git config --local user.name "github-actions[bot]"
+          git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+          git commit -a -m "$(TZ=Asia/Shanghai date +"%Y-%m-%d %H:%M:%S")"
+          git push "https://${{ github.actor }}:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}" master
+      
+      - name: Stop if changes = no
+        if: env.changes == 'no'
+        run: exit 1
+
       - name: Check out the repo
         uses: actions/checkout@v2
         
